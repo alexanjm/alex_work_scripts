@@ -41,19 +41,27 @@ if __name__ == '__main__':
         else:
             delim_str = ','
         num_dels = first_line.count(delim_str)
+    ifile.close()
+    print('delimiter is', delim_str)
 
-        if in_args.header == 'y':
-            first_line = first_line.split(delim_str)
-            for i in range(num_dels + 1):
-                exec("col%d = []" % (i + 1))
-            print(col1)
-            print(col2)
-            print(col3)
-            print(col4)
+    ## Make it so that if it raises an exception on input file delimiter type we try the other one (comma vs tab)
+
+    if in_args.header == 'y':
+        first_line = first_line.split(delim_str)
+        print(first_line)
+        for i in range(num_dels + 1):
+            exec("col%d = []" % (i + 1))
+        print(col1)
+        print(col2)
+        print(col3)
+        print(col4)
+        with open(in_args.input_file, 'r') as ifile:
             for line in ifile:
                 line = line.rstrip('\n').split(delim_str)
+                print('line', line)
                 for i in range(num_dels + 1):
                     exec("col%d.append(line[%d])" % (i + 1, i))
+                    print('i is:', i)
     print(col1)
     print(col2)
     print(col3)
@@ -63,11 +71,36 @@ if __name__ == '__main__':
     else:
         ofile_name = in_args.input_file + '.parsed'
     print(ofile_name)
+    out_str = ''
     with open(ofile_name, 'w') as ofile:
         for x in range(len(col1)):
-            print(col1[x])
-            out_str = '%s\t%s\t%s\t%s\n' % (col1[x], col2[x], col3[x], col4[x])
-            ofile.write(out_str)
+            #print(col1[x])
+            # out_str = ''
+            for y in range(1, num_dels+2):
+                exec("a = col{0}".format(y))
+                if delim_str == '\t':
+                    out_delim = ','
+                else:
+                    out_delim = '\t'
+                print('out delimiter', out_delim)
+                out_str_col = '%s' % (a[x])
+                out_str_delim = out_str_col + out_delim
+                print(out_str_delim)
+                if y < (num_dels + 1):
+                    out_str = out_str + out_str_delim
+                    # print('one', out_str)
+                else:
+                    out_str = out_str + out_str_delim.rstrip(out_delim) + '\n'
+                    # print('two', out_str)
+        # this is final output in tabular form -- still need to re-put headers
+        print(out_str)
+        ofile.write(out_str)
+
+
+            # out_str_cols = '%s\t'*(num_dels+1) % (col1[x], col2[x], col3[x], col4[x])
+            # out_str = out_str_cols + '\n'
+            # ofile.write(out_str)
+        #print(col1[0],'\t',col2[0],col3[0],col4[0])
 
 
 
