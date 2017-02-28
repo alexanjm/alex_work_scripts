@@ -5,10 +5,12 @@
 # import os
 import sys
 import argparse
+
+
 def get_delimiter():
     with open(in_args.input_file, 'r') as ifile:
         first_line = ifile.readline()
-        print('arg', in_args.in_delim)
+        #print('arg', in_args.in_delim)
         if in_args.in_delim is None:
             if '\t' in first_line:
                 delim_str = '\t'
@@ -19,27 +21,30 @@ def get_delimiter():
                 delim_str = '\t'
             else:
                 delim_str = ','
-        print('delimiter', delim_str)
+        #print('delimiter', delim_str)
         num_dels = first_line.count(delim_str)
     ifile.close()
     return delim_str, num_dels
 
+
 def out_file_name():
     if in_args.out_file is True:
-        ofile_name = in_args.out_file
+        out_file_name = in_args.out_file
     else:
-        ofile_name = in_args.input_file + '.parsed'
-    print(ofile_name)
-    return ofile_name
+        out_file_name = in_args.input_file + '.parsed'
+    print(out_file_name)
+    return out_file_name
+
 
 def get_num_cols():
     col_name_list = []
     for i in range(num_dels + 1):
         list_str = "col{0}".format(i + 1)
-        print('list', list_str)
+        #print('list', list_str)
         list_str = []
         col_name_list.append(list_str)
     return col_name_list
+
 
 def read_infile():
     with open(in_args.input_file, 'r') as ifile:
@@ -48,6 +53,7 @@ def read_infile():
             for i in range(num_dels + 1):
                 cols[i].append(line[i])
     return cols
+
 
 def write_outfile():
     out_str = ''
@@ -70,11 +76,11 @@ def write_outfile():
                 out_str_col = '%s' % (cols[y][x])
                 out_str_delim = out_str_col + out_delim
                 # print(out_str_delim)
-                if y < (num_dels):
-                    out_str = out_str + out_str_delim
+                if y < num_dels:
+                    out_str += out_str_delim
                     # print('one', out_str)
                 else:
-                    out_str = out_str + out_str_delim.rstrip(out_delim) + '\n'
+                    out_str += out_str_delim.rstrip(out_delim) + '\n'
                     # print('two', out_str)
         # this is final output in tabular form -- still need to re-put headers
         print(out_str)
@@ -93,13 +99,13 @@ if __name__ == '__main__':
     in_args = parser.parse_args()
 
     delim_str, num_dels = get_delimiter()
-    print('dels', num_dels)
+    #print('dels', num_dels)
 
     cols = get_num_cols()
-    print('cols', cols)
+    #print('cols', cols)
 
     cols_list = read_infile()
-    print('cols list', cols_list)
+    #print('cols list', cols_list)
 
     ofile_name = out_file_name()
 
