@@ -55,32 +55,49 @@ def read_infile():
     return cols
 
 
-def write_outfile():
+def write_outfile(columns):
     out_str = ''
     with open(ofile_name, 'w') as ofile:
+        i = 0
         for x in range(len(cols[0])):
             # print(col1[x])
             # out_str = ''
-            for y in range(num_dels + 1):
-                if in_args.in_delim is None:
-                    if delim_str == '\t':
-                        out_delim = ','
-                    else:
-                        out_delim = '\t'
+            if columns != None:
+                #print('whatttt', columns)
+                column_nums = columns.strip().split(',')
+                #print('?', column_nums[0])
+            else:
+                column_nums = range(num_dels + 1)
+            #print('dels', num_dels)
+            #print('cols', len(column_nums))
+            for y in column_nums:
+                y = int(y) - 1
+                if in_args.parse is False:
+                    out_delim = delim_str
                 else:
-                    if in_args.in_delim == 't':
-                        out_delim = ','
+                    if in_args.in_delim is None:
+                        if delim_str == '\t':
+                            out_delim = ','
+                        else:
+                            out_delim = '\t'
                     else:
-                        out_delim = '\t'
+                        if in_args.in_delim == 't':
+                            out_delim = ','
+                        else:
+                            out_delim = '\t'
                 # print('out delimiter', out_delim)
                 out_str_col = '%s' % (cols[y][x])
                 out_str_delim = out_str_col + out_delim
                 # print(out_str_delim)
-                if y < num_dels:
+                if i < len(column_nums) - 1:
+                    print('num_test', len(column_nums)-1)
+                    print('i_test', i)
+                    i += 1
                     out_str += out_str_delim
                     # print('one', out_str)
                 else:
                     out_str += out_str_delim.rstrip(out_delim) + '\n'
+                    i = 0
                     # print('two', out_str)
         # this is final output in tabular form -- still need to re-put headers
         print(out_str)
@@ -92,10 +109,14 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='GOAL: Parse anything and everything however you would like')
     parser.add_argument('input_file', help='transdecoder file')
     parser.add_argument('-d', '--in_delim', help='input delimiter')
+    #still need sort functionality
     parser.add_argument('-s', '--sort', help='sort column <#> by <method> (ascending, descending, alphabetical')
+    #outfile functionality? not sure
     parser.add_argument('-o', '--out_file', help='output file')
     parser.add_argument('-c', '--column', help='columns #s (1-?) to write to output')
+    # still no header functionality
     parser.add_argument('-hd', '--header', default='y', help='header? <y or n>')
+    parser.add_argument('-p', '--parse', help='parse -- convert delimiter', action='store_true')
     in_args = parser.parse_args()
 
     delim_str, num_dels = get_delimiter()
@@ -109,6 +130,10 @@ if __name__ == '__main__':
 
     ofile_name = out_file_name()
 
-    write_outfile()
+    write_outfile(in_args.column)
+
+
+    print('true', in_args.column)
+    print(in_args.parse)
 
 
