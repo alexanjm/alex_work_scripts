@@ -4,3 +4,6 @@
 htmlcov/
 __pycache__
 .cache
+
+.DS_Store
+.coverage
