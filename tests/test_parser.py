@@ -38,6 +38,13 @@ def test_ofile_name_default():
 
     assert out_name == result
 
+def test_ofile_name_no_parse_or_sort():
+    infile = 'tests/test_commas.txt'
+    out_name = ultimate_parser.get_out_file_name(infile, None, False, None)
+    result = infile + '.parsed'
+
+    assert out_name == result
+
 
 def test_ofile_name_input():
     infile = 'tests/test_commas.txt'
@@ -78,7 +85,7 @@ def test_write_outfile():
 def test_write_outfile_input_delims_columns_parse():
     ofile = 'tests/test_commas.txt.parsed'
     cols_list = [['alex', '1', '4'], ['ryan', '2', '5'], ['kimani', '3', '6']]
-    output = ultimate_parser.write_outfile('3,1', ofile, cols_list, 2, True, ',', None, None)
+    output = ultimate_parser.write_outfile('3,1', ofile, cols_list, 2, True, ',', ',', '\t')
     result = ['kimani\talex', '3\t1', '6\t4']
     lines = []
     with open(output, 'r') as ofile:
@@ -99,6 +106,13 @@ def test_sort_ascending_no_header():
     assert sorted_list == output
 
 
+def test_how_to_sort_asc():
+    sorting_args = [2, False]
+    sorting_by = ultimate_parser.how_to_sort(2, None)
+
+    assert sorting_by == sorting_args
+
+
 def test_diff_col_nums():
     delimiter_string, number_delimiters, diff_columns = ultimate_parser.get_delimiter('tests/bad_header.txt', None)
 
@@ -109,6 +123,7 @@ def test_diff_col_nums():
     result = [['Column Name', 'alex', 'ryan', 'kimani'], ['age', '24', '22', '23'], ['weight', '195', '190', '160']]
 
     assert column_contents_list == result
+
 
 
 def test_main(monkeypatch):

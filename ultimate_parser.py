@@ -105,6 +105,19 @@ def transpose_list(column_list):
 #     else:
 #         return transposed_list, None
 
+def sorting_commands(cols_contents, sorting_input, header_arg):
+    transposed = transpose_list(cols_contents)
+    if header_arg is True:
+        header_line = transposed[0]
+        transposed.remove(header_line)
+        transposed_list_no_header = sort_file(transposed, sorting_input)
+        transposed_list = [header_line] + transposed_list_no_header
+    else:
+        transposed_list = sort_file(transposed, sorting_input)
+
+    cols_list = transpose_list(transposed_list)
+
+    return cols_list
 
 def sort_file(column_lists, sort_input):
     for i in range(len(column_lists)):
@@ -188,22 +201,12 @@ def main():
 
     sorting = how_to_sort(in_args.sort_asc, in_args.sort_desc)
 
-    try:
-        if sorting is not None:
-            transposed = transpose_list(cols_list)
-            if in_args.header is True:
-                header_line = transposed[0]
-                transposed.remove(header_line)
-                transposed_list_no_header = sort_file(transposed, sorting)
-                transposed_list = [header_line] + transposed_list_no_header
-            else:
-                transposed_list = sort_file(transposed, sorting)
-
-            cols_list = transpose_list(transposed_list)
-
-    except TypeError:
-        print("ERROR: Do you need to specify this file has a header? --> use flag -hd")
-        raise SystemExit
+    if sorting is not None:
+        try:
+            cols_list = sorting_commands(cols_list, sorting, in_args.header)
+        except TypeError:
+            print("ERROR: Do you need to specify this file has a header? --> use flag -hd")
+            raise SystemExit
 
     ofile_name = get_out_file_name(in_args.input_file, in_args.out_file, in_args.parse, sorting)
 
