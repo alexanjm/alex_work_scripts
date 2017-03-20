@@ -38,6 +38,7 @@ def test_ofile_name_default():
 
     assert out_name == result
 
+
 def test_ofile_name_no_parse_or_sort():
     infile = 'tests/test_commas.txt'
     out_name = ultimate_parser.get_out_file_name(infile, None, False, None)
@@ -123,7 +124,6 @@ def test_diff_col_nums():
     result = [['Column Name', 'alex', 'ryan', 'kimani'], ['age', '24', '22', '23'], ['weight', '195', '190', '160']]
 
     assert column_contents_list == result
-
 
 
 def test_main(monkeypatch):

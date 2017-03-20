@@ -3,7 +3,7 @@
 # Created on: Feb 27, 2017
 
 # import os
-import sys
+# import sys
 import argparse
 
 
@@ -18,7 +18,7 @@ def get_delimiter(in_file, in_delim):
                 delim_str = ','
         else:
             delim_str = in_delim
-            print(delim_str)
+            delim_str = str(delim_str)
 
         num_dels = second_line.count(delim_str)
         first_length = len(first_line.split(delim_str))
@@ -34,11 +34,11 @@ def get_out_file_name(in_file, out_file, parsed, is_sorted):
         out_file_name = out_file
     else:
         if parsed is True:
-            out_file_name = out_file_name + '.parsed'
+            out_file_name += '.parsed'
         if is_sorted is not None:
-            out_file_name = out_file_name + '.sorted'
+            out_file_name += '.sorted'
         if parsed is False and is_sorted is None:
-            out_file_name = out_file_name + '.parsed'
+            out_file_name += '.parsed'
 
     return out_file_name
 
@@ -90,6 +90,7 @@ def how_to_sort(asc, desc):
 
     return sort_by
 
+
 def transpose_list(column_list):
     transposed = [[column_list[j][i] for j in range(len(column_list))] for i in range(len(column_list[0]))]
 
@@ -119,6 +120,7 @@ def sorting_commands(cols_contents, sorting_input, header_arg):
 
     return cols_list
 
+
 def sort_file(column_lists, sort_input):
     for i in range(len(column_lists)):
         for j in range(len(column_lists[0])):
@@ -132,7 +134,6 @@ def sort_file(column_lists, sort_input):
     col_sort = sort_input[0] - 1
     sort_method = sort_input[1]
     sorted_cols = sorted(column_lists, key=lambda my_sort_cols: my_sort_cols[col_sort], reverse=sort_method)
-
 
     return sorted_cols
 
@@ -150,17 +151,15 @@ def write_outfile(columns,  ofile_name, final_cols, num_dels, in_parse, delim_st
                 y = int(y) - 1
                 if in_parse is False:
                     out_delim = delim_str
-                else:
-                    if input_delim is None:
-                        if delim_str == '\t':
-                            out_delim = ','
-                        else:
-                            out_delim = '\t'
+                elif output_delim is not None:
+                    out_delim = output_delim
+                elif input_delim is None and output_delim is None:
+                    if delim_str == '\t':
+                        out_delim = ','
                     else:
-                        if output_delim is None:
-                            out_delim = '\t'
-                        else:
-                            out_delim = output_delim
+                        out_delim = '\t'
+                else:
+                    out_delim = '\t'
                 out_str_col = '%s' % (final_cols[y][x])
                 out_str_delim = out_str_col + out_delim
                 if i < len(column_nums) - 1:
@@ -175,7 +174,7 @@ def write_outfile(columns,  ofile_name, final_cols, num_dels, in_parse, delim_st
 
 
 def main():
-    #args = sys.argv
+    # args = sys.argv
     parser = argparse.ArgumentParser(description='GOAL: Parse anything and everything however you would like')
     parser.add_argument('input_file', help='File to be parsed.')
     parser.add_argument('-p', '--parse', help='Convert files to comma separated, tab separated or even custom '
@@ -209,7 +208,8 @@ def main():
             raise SystemExit
 
     ofile_name = get_out_file_name(in_args.input_file, in_args.out_file, in_args.parse, sorting)
-
+    print('in', in_args.idel)
+    print('out', in_args.odel)
     output = write_outfile(in_args.column, ofile_name, cols_list, num_dels, in_args.parse, delim_str, in_args.idel, in_args.odel)
 
     return output
