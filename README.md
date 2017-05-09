@@ -1,10 +1,11 @@
 ## Alex's work scripts
 An assortment of random scripts that may/may not be useful in the future
 
-# ultimate_parser.py
+### ultimate_parser.py
 Probably the only useful thing in here --
 
-Usage: ultimate_parser.py [-h] [-p] [-hd] [-c COLUMN] [-sa SORT_ASC]
+#### Usage: 
+ultimate_parser.py [-h] [-p] [-hd] [-c COLUMN] [-sa SORT_ASC]
                           [-sd SORT_DESC] [-o OUT_FILE] [-id IDEL] [-od ODEL]
                           input_file
 
