@@ -19,7 +19,7 @@ GOAL: Parse anything and everything however you would like
 | -c        | < int,int(...) >  | keep certain columns                              |
 | -sa       | < int >           | Sort ascending by a certain column #              |
 | -sd       | < int >           | Sort descending by a certain column #             |
-| -hd       |                   | is a header present? (Needed for sort)            |
+| -hd       |                   | Header present? (Needed for sort - Assumes NO)    |
 | -o        | < filename.txt >  | Name of output file                               |
 | -id       | < string >        | Custom input delimiter                            |
 | -od       | < string >        | Custom output delimiter                           |
