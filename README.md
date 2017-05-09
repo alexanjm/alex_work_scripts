@@ -15,7 +15,7 @@ positional arguments:
   input_file            File to be parsed.
 
 optional arguments:
-  -h, --help            show this help message and exit
+  -h, --help\tshow this help message and exit
   -p, --parse           Convert files to comma separated, tab separated or
                         even custom delimiters. Default = False
   -hd, --header         <-hd> File contains a header?. Default = False.
