@@ -13,7 +13,7 @@ GOAL: Parse anything and everything however you would like
 
 
 | Arguments |    Input Type     | Description                                       |
-| ----------|:-----------------:| --------------------------------------------------|
+|:---------:|:-----------------:| --------------------------------------------------|
 | -h        |                   | help menu                                         |
 | -p        |                   | convert delimiters ("," "\t" or custom delimiters)|
 | -c        | < int,int(...) >  | keep certain columns                              |
