@@ -7,3 +7,4 @@ with open('file_names.txt', 'r') as ifile:
         i = i.strip('\n')
         submit_str = "qsub %s.protein_lookup.sh" % i
         Popen(submit_str, shell=True)
+
