@@ -2,17 +2,21 @@
 # -*- coding: utf-8 -*-
 # Created on: May 31, 2017
 
+# GOAL: This script sorts through blast output to grab the top hit -- based on evalue -- to display for
+# each gene isoform
+
 import argparse
 
+
 def test(input_file):
-    # input_file = '/Users/jonesalm/Documents/playground/regen_hydractinia_related/annotation/hydra_blast_sofia/transdecoder_Hech_hydraNR.results'
-    # output_file = '/Users/jonesalm/Documents/playground/regen_hydractinia_related/annotation/hydra_blast_sofia/transdecoder_Hech_hydraNR.results.top_hit'
+    # input_file = 'transdecoder_Hech_hydraNR.results'
+    # output_file = 'transdecoder_Hech_hydraNR.results.top_hit'
     output_file = input_file + '.top_hit'
     final_data = {}
     with open(output_file, 'w') as ofile:
         with open(input_file, 'r') as ifile:
             for line in ifile:
-                if line.startswith('#') == False:
+                if line.startswith('#') is False:
                     transcript, info = line.rstrip('\n').split('\t', 1)
                     if bool(transcript in final_data.keys()) is False:
                         final_data[transcript] = info
@@ -21,7 +25,6 @@ def test(input_file):
     ofile.close()
 
 if __name__ == '__main__':
-
 
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('input_file', help='Input file')

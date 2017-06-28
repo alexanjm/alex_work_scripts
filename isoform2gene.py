@@ -3,15 +3,15 @@
 # Created on: June 5th, 2017
 
 
-### GOAL ###
+# GOAL ###
 # This script converts a list of blast hits at the ISOFORM level to a list of only top hits at the GENE level
 
 import argparse
 
+
 def convert(input_file):
     output_file = input_file + '.genes'
     gene_dict = {}
-    bumped_dict = {}
     # input file is blast output with annotation appended
     bumped_file = input_file + '.insignificant_hits'
     sig_file = input_file + '.significant_hits'
@@ -33,7 +33,6 @@ def convert(input_file):
                         # If the gene already exists in the gene dictionary, use the hit with the lower evalue
                         if bool(gene in gene_dict.keys()) is True:
                             # print(gene, gene_dict[gene][9])
-                            # print(float(gene_dict[gene][9]), float(evalue))
                             # print(float(gene_dict[gene][9]) > float(evalue))
                             # I am using the absolute best hit for each gene based on its evalue
                             if float(gene_dict[gene][9]) > float(evalue):
@@ -56,10 +55,6 @@ def convert(input_file):
             new_string += '\n'
             ofile.write(new_string)
     ofile.close()
-
-
-
-
 
 
 if __name__ == '__main__':

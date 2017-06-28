@@ -55,6 +55,7 @@ def get_num_cols(col_nums):
         col_name_list.append(list_str)
     return col_name_list
 
+
 # Read input file
 def read_infile(input_file, delim, col_nums, columns_list, diff):
     with open(input_file, 'r') as ifile:

@@ -3,15 +3,15 @@
 # Created on: June 6th, 2017
 
 
-### GOAL ###
+# GOAL ###
 # This script appends annotations to the count matrix for each geneID --
 # The resulting file <input_file_name.annotated> is used in the R script to generate a heatmap for top # of
 # differentially expressed genes
 
 import argparse
 
+
 def convert(input_file1, count_matrix):
-    output_file = input_file1 + '.annotated'
     gene_annot_dict = {}
 
     # Create dictionary of geneID's and their associated annotation
@@ -24,7 +24,7 @@ def convert(input_file1, count_matrix):
             # print(annotation)
             if bool(gene in gene_annot_dict.keys()) is False:
                 gene_annot_dict[gene] = annotation
-                #print(gene, annotation)
+                # print(gene, annotation)
     ifile.close()
 
     # Write output file: Count matrix with annotations appended to its respective geneID
@@ -32,7 +32,7 @@ def convert(input_file1, count_matrix):
     with open(outfile, 'w') as ofile:
         with open(count_matrix, 'r') as cmatrix:
             for line in cmatrix:
-                elements= line.rstrip('\n').split('\t')
+                elements = line.rstrip('\n').split('\t')
                 gene = elements[0]
                 # Create empty string for elements to be appended
                 element_str = ''
