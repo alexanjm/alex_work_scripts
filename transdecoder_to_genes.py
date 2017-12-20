@@ -8,7 +8,7 @@
 # for input to BLAST
 
 input_file = 'Trinity.fasta.transdecoder_renamedHeaders.pep3'
-output_file = 'out.txt'
+output_file = input_file + '.gene_level'
 gene_dict = {}
 gene_order = []
 
