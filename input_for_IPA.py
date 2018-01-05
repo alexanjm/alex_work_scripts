@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     print(in_args.input_file1 + '.ipa')
 
-    filter_alignment(in_args.input_file1, in_args.input_file2)
+    ipa_input(in_args.input_file1, in_args.input_file2)
 
     # to test speed -- probably need to hard code input/output files to make the below run correctly...
     # import timeit
