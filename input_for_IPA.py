@@ -20,19 +20,17 @@ def ipa_input(input_file1, input_file2):
 
 
 
-    # output_file = input_file2 + '.ipa'
-    # with open(output_file, 'w') as ofile:
-    #     with open(input_file, 'r') as ifile2:
-    #         for line in ifile2:
-    #             blast_hit = line.rstrip('\n').split('\t')
-    #             q_len = float(blast_hit[3])
-    #             align_len = float(blast_hit[4])
-    #
-    #             if (align_len/q_len) >= percent/100:
-    #                 ofile.write(line)
-    #
-    #     ifile2.close()
-    # ofile.close()
+    output_file = input_file2 + '.ipa'
+    with open(output_file, 'w') as ofile:
+        with open(input_file2, 'r') as ifile2:
+            for line in ifile2:
+                line = line.rstrip('\n')
+                elements = line.rstrip('\n').split('\t')
+                new_line = '%s\t%s\n' % (gene_ann_dict[elements[0]], line)
+                ofile.write(new_line)
+
+        ifile2.close()
+    ofile.close()
 
 if __name__ == '__main__':
 
