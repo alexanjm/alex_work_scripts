@@ -26,7 +26,10 @@ def ipa_input(input_file1, input_file2):
             for line in ifile2:
                 line = line.rstrip('\n')
                 elements = line.rstrip('\n').split('\t')
-                new_line = '%s\t%s\n' % (gene_ann_dict[elements[0]], line)
+                if elements[0] in gene_ann_dict.keys():
+                    new_line = '%s\t%s\n' % (gene_ann_dict[elements[0]], line)
+                else:
+                    new_line = 'No Annotation\t%s\n' % (line)
                 ofile.write(new_line)
 
         ifile2.close()
